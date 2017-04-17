@@ -88,7 +88,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         try {
-            InputStream is = getAssets().open("cunit.xml");
+            InputStream is = getAssets().open("barcelona.xml");
+         //   InputStream is = getAssets().open("cunit.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(is);
@@ -181,7 +182,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         try {
-            InputStream is = getAssets().open("cunit.xml");
+            InputStream is = getAssets().open("barcelona.xml");
+         //   InputStream is = getAssets().open("cunit.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(is);
