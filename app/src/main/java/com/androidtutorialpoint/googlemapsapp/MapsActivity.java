@@ -11,6 +11,9 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -48,6 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       // requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_maps);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -57,7 +61,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mGoogleApiClient != null) {
+              LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        }
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        v.cancel();
+
+    }
+
     @Override
     public void onMapClick(LatLng latLng)
     {
@@ -237,9 +254,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             long[] pattern = {3, 100, 100};
             v.vibrate(pattern, 1);
         }
-        CharSequence text = ide+" "+results[0]+" "+distance;
+        CharSequence text = ide+" " +distance;
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
+        toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
     }
 
