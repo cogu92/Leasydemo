@@ -8,25 +8,6 @@ android:orientation="vertical"
 tools:context="com.androidtutorialpoint.googlemapsapp.MapsActivity"
     android:weightSum="1">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.00"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <ImageView
-            android:id="@+id/voice"
-            android:layout_width="190dp"
-            android:layout_height="190dp"
-            android:layout_weight="0.67" />
-
-        <ImageView
-            android:id="@+id/vibration"
-            android:layout_width="190dp"
-            android:layout_height="190dp" />
-    </LinearLayout>
-
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -41,18 +22,20 @@ tools:context="com.androidtutorialpoint.googlemapsapp.MapsActivity"
         android:orientation="horizontal"
         android:weightSum="1">
 
-        <ImageView
-            android:id="@+id/Phone"
+        <ImageButton
+            android:id="@+id/vibration"
             android:layout_width="190dp"
             android:layout_height="190dp"
+            android:layout_weight="0.67"
             android:adjustViewBounds="false"
-            android:src="@drawable/call"
-            android:layout_weight="0.67" />
+            android:background="@color/common_google_signin_btn_text_dark_default"
+            android:src="@drawable/vibraton" />
 
-        <ImageView
-            android:id="@+id/configuration"
+        <ImageButton
+            android:id="@+id/voice"
             android:layout_width="190dp"
             android:layout_height="190dp"
+            android:background="@color/common_google_signin_btn_text_dark_default"
             android:src="@drawable/voice" />
     </LinearLayout>
 

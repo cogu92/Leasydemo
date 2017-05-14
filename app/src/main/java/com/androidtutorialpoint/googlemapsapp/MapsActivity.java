@@ -2,10 +2,13 @@ package com.androidtutorialpoint.googlemapsapp;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Vibrator;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.Voice;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -13,7 +16,9 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -34,25 +39,36 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import java.io.InputStream;
+import java.util.Locale;
+import java.util.TimerTask;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener,GoogleMap.OnMapClickListener {
+        LocationListener,GoogleMap.OnMapClickListener,View.OnClickListener {
 
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
+    public   TextToSpeech mtext_Speech;
+    public   String Selection="Voice";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_maps);
+
+
+        ImageButton btn_vibration=(ImageButton)findViewById(R.id.vibration);
+        btn_vibration.setOnClickListener(this);
+
+        ImageButton btn_Voice=(ImageButton)findViewById(R.id.voice);
+        btn_Voice.setOnClickListener(this);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -61,6 +77,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        mtext_Speech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    mtext_Speech.setLanguage(Locale.US);
+                }
+            }
+        });
 
     }
 
@@ -68,11 +92,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onDestroy() {
         super.onDestroy();
         if (mGoogleApiClient != null) {
-              LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
         Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         v.cancel();
 
+        mtext_Speech.shutdown();
+
+        super.onDestroy();
     }
 
     @Override
@@ -90,7 +117,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
 
-         //Initialize Google Play Services
+        //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
@@ -106,18 +133,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         try {
             InputStream is = getAssets().open("barcelona.xml");
-         //   InputStream is = getAssets().open("cunit.xml");
+            //   InputStream is = getAssets().open("cunit.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(is);
             Element element=doc.getDocumentElement();
             element.normalize();
             NodeList nList = doc.getElementsByTagName("node");
-           for (int i=0; i<nList.getLength(); i++) {
+            for (int i=0; i<nList.getLength(); i++) {
                 Node node = nList.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element2 = (Element) node;
-                   LatLng sydney = new LatLng(Double.parseDouble(element2.getAttribute("lat")),Double.parseDouble( element2.getAttribute("lon")));
+                    LatLng sydney = new LatLng(Double.parseDouble(element2.getAttribute("lat")),Double.parseDouble( element2.getAttribute("lon")));
                     mMap.addMarker(new MarkerOptions().position(sydney).title(element2.getAttribute("id")));
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
                 }
@@ -183,9 +210,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.zoomTo(18));
 
         //stop location updates
-       // if (mGoogleApiClient != null) {
-         //   LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-      //  }
+        // if (mGoogleApiClient != null) {
+        //   LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        //  }
         Context context = getApplicationContext();
 
 
@@ -200,14 +227,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         try {
             InputStream is = getAssets().open("barcelona.xml");
-         //   InputStream is = getAssets().open("cunit.xml");
+            // InputStream is = getAssets().open("cunit.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(is);
             Element element=doc.getDocumentElement();
             element.normalize();
             NodeList nList = doc.getElementsByTagName("node");
-                  for (int i=0; i<nList.getLength(); i++) {
+            for (int i=0; i<nList.getLength(); i++) {
 
                 Node node = nList.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -230,35 +257,79 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         float distance = locationA.distanceTo(locationB);
+        if ( Selection=="Vibration") {
+            mtext_Speech.shutdown();
+            if (distance > 15) {
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.cancel();
+            }
+            if (distance <= 15) {
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                long[] pattern = {3, 100, 1000};
+                v.vibrate(pattern, 1);
+            }
+            if (distance <= 10) {
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                long[] pattern = {3, 100, 500};
+                v.vibrate(pattern, 1);
+            }
+            if (distance <= 3) {
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                long[] pattern = {3, 100, 100};
+                v.vibrate(pattern, 1);
+            }
+            CharSequence text = ide+" " +distance;
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 0);
+            toast.show();
 
-        if (distance>15)
-        {
-            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            v.cancel();
         }
-        if (distance<=15)
-        {
-            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            long[] pattern = {3, 100, 1000};
-            v.vibrate(pattern, 1);
+
+        if ( Selection=="Voice") {
+            if (distance <15)
+            {
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        String toSpeak = "Corner in 15 meters";
+                        mtext_Speech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                        finish();
+                    }
+                };
+
+            }
+            if (distance <10)
+            {
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        String toSpeak = "Corner in 10 meters";
+                        mtext_Speech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                        finish();
+                    }
+                };
+            }
+            if (distance <5)
+            {
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        String toSpeak = "Corner in 5 meters";
+                        mtext_Speech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                        finish();
+                    }
+                };
+            }
+
+
+
+
+
         }
-        if (distance<=10)
-        {
-            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            long[] pattern = {3, 100, 500};
-            v.vibrate(pattern, 1);
-        }
-        if (distance<=3)
-        {
-            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            long[] pattern = {3, 100, 100};
-            v.vibrate(pattern, 1);
-        }
-        CharSequence text = ide+" " +distance;
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
+
+
+
     }
 
     @Override
@@ -326,6 +397,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 return;
             }
+
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId())
+        {
+            case R.id.vibration:
+                Selection="Vibration";
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(500);
+                break;
+            case R.id.voice:
+
+
+                mtext_Speech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                    @Override
+                    public void onInit(int status) {
+                        if(status != TextToSpeech.ERROR) {
+                            mtext_Speech.setLanguage(Locale.US);
+                        }
+                    }
+                });
+                Selection="Voice";
+                String toSpeak = Selection;
+                Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
+                mtext_Speech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                break;
+
 
         }
     }
