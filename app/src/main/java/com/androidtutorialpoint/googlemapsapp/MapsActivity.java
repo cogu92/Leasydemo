@@ -40,6 +40,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import java.io.InputStream;
 import java.util.Locale;
+import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -57,6 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LocationRequest mLocationRequest;
     public   TextToSpeech mtext_Speech;
     public   String Selection="Voice";
+    private static final long SPLASH_SCREEN_DELAY = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +101,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mtext_Speech.shutdown();
 
-        super.onDestroy();
     }
 
     @Override
@@ -287,44 +288,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         if ( Selection=="Voice") {
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            v.cancel();
             if (distance <15)
             {
-                TimerTask task = new TimerTask() {
-                    @Override
-                    public void run() {
+
                         String toSpeak = "Corner in 15 meters";
                         mtext_Speech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
-                        finish();
-                    }
-                };
+
 
             }
             if (distance <10)
             {
-                TimerTask task = new TimerTask() {
-                    @Override
-                    public void run() {
+
                         String toSpeak = "Corner in 10 meters";
                         mtext_Speech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
-                        finish();
-                    }
-                };
+
             }
             if (distance <5)
             {
-                TimerTask task = new TimerTask() {
-                    @Override
-                    public void run() {
+
                         String toSpeak = "Corner in 5 meters";
                         mtext_Speech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
                         finish();
-                    }
-                };
+
             }
-
-
-
-
 
         }
 
@@ -347,16 +335,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
 
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-                //Prompt the user once explanation has been shown
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
-
-
             } else {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,

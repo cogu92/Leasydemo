@@ -12,31 +12,65 @@ tools:context="com.androidtutorialpoint.googlemapsapp.MapsActivity"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="418dp"
+        android:layout_height="331dp"
         android:layout_margin="10dp"        />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.92"
+        android:layout_height="171dp"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:background="@color/colorPrimary"
+        android:weightSum="1"
+        android:layout_weight="0.95">
 
         <ImageButton
             android:id="@+id/vibration"
-            android:layout_width="190dp"
+            android:layout_width="195dp"
             android:layout_height="190dp"
-            android:layout_weight="0.67"
+            android:layout_weight="0.43"
             android:adjustViewBounds="false"
-            android:background="@color/common_google_signin_btn_text_dark_default"
-            android:src="@drawable/vibraton" />
+            android:background="@color/colorPrimary"
+            android:src="@drawable/btn_interes" />
 
         <ImageButton
             android:id="@+id/voice"
-            android:layout_width="190dp"
+            android:layout_width="195dp"
             android:layout_height="190dp"
-            android:background="@color/common_google_signin_btn_text_dark_default"
-            android:src="@drawable/voice" />
+            android:background="@color/colorPrimary"
+            android:src="@drawable/btn_call"
+            android:layout_weight="0.89" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt_Interestpoints"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="@string/points_of_interes"
+            android:textAlignment="center"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_emergency"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="@string/viemergency_call"
+            android:textAlignment="center"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
 </LinearLayout>

@@ -30,8 +30,11 @@ public class SplashScreenActivity extends Activity {
             public void run() {
 
                 // Start the next activity
-                Intent mainIntent = new Intent().setClass(
-                        SplashScreenActivity.this, MapsActivity.class);
+             //   Intent mainIntent = new Intent().setClass(SplashScreenActivity.this, MapsActivity.class);
+                Intent mainIntent = new Intent().setClass(SplashScreenActivity.this, MenuActivity.class);
+
+
+
                 startActivity(mainIntent);
 
                 // Close the activity so the user won't able to go back this
@@ -42,7 +45,7 @@ public class SplashScreenActivity extends Activity {
 
         // Simulate a long loading process on application startup.
         Timer timer = new Timer();
-        timer.schedule(task, SPLASH_SCREEN_DELAY);
+        timer.schedule(task,  SPLASH_SCREEN_DELAY);
     }
 
 }

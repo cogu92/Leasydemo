@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.androidtutorialpoint.googlemapsapp.MenuActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.13"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:weightSum="1">
+
+        <ImageButton
+            android:id="@+id/btn_call"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.66"
+            android:adjustViewBounds="false"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/map_btn" />
+
+        <ImageButton
+            android:id="@+id/btn_vibration"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.55"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/ok_btn" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="NAVIGATE"
+            android:textAlignment="center"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_ox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.44"
+            android:text="SAVE ROUTES"
+            android:textAlignment="center"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.13"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <ImageButton
+            android:id="@+id/btn_contact"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.66"
+            android:adjustViewBounds="false"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/contact_btn" />
+
+        <ImageButton
+            android:id="@+id/voicea"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.55"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/configuration_btn" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:layout_weight="0.03">
+
+        <TextView
+            android:id="@+id/txt_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.21"
+            android:text="AGENDA"
+            android:textAlignment="center"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_config"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SETTINGS"
+            android:textAlignment="center"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>
