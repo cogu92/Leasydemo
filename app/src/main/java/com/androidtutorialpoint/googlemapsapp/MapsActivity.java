@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
@@ -13,12 +14,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableStringBuilder;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -51,13 +55,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener,GoogleMap.OnMapClickListener,View.OnClickListener {
 
+    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     public   TextToSpeech mtext_Speech;
-    public   String Selection="Voice";
+    public   String Selection="Vibration";
     private static final long SPLASH_SCREEN_DELAY = 3000;
 
     @Override
@@ -65,12 +70,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        TextView txt_emergency = (TextView) findViewById(R.id.txt_emergency);
+        txt_emergency.setTextSize(MainSettings.ivar1);
 
-        ImageButton btn_vibration=(ImageButton)findViewById(R.id.vibration);
-        btn_vibration.setOnClickListener(this);
+        TextView txt_Interestpoints = (TextView) findViewById(R.id.txt_Interestpoints);
+        txt_Interestpoints.setTextSize(MainSettings.ivar1);
 
-        ImageButton btn_Voice=(ImageButton)findViewById(R.id.voice);
-        btn_Voice.setOnClickListener(this);
+        ImageButton btn_call=(ImageButton)findViewById(R.id.btn_call);
+        btn_call.setOnClickListener(this);
+
+        ImageButton btn_points=(ImageButton)findViewById(R.id.btn_points);
+        btn_points.setOnClickListener(this);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -146,7 +156,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element2 = (Element) node;
                     LatLng sydney = new LatLng(Double.parseDouble(element2.getAttribute("lat")),Double.parseDouble( element2.getAttribute("lon")));
-                    mMap.addMarker(new MarkerOptions().position(sydney).title(element2.getAttribute("id")));
+                    mMap.addMarker(new MarkerOptions().position(sydney).title(element2.getAttribute("id")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
                 }
             }
@@ -268,22 +278,54 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 long[] pattern = {3, 100, 1000};
                 v.vibrate(pattern, 1);
+                //            CharSequence text = ide+" " +distance;
+                CharSequence text = "CROSSWALK NEAR";
+
+                // SpannableStringBuilder biggerText = new SpannableStringBuilder(text);
+                // biggerText.setSpan(new RelativeSizeSpan(1.35f), 0, text.length(), 0);
+                // Toast.makeText(context, biggerText, Toast.LENGTH_LONG).show();
+
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 0);
+
+                toast.show();
             }
             if (distance <= 10) {
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 long[] pattern = {3, 100, 500};
                 v.vibrate(pattern, 1);
+                //            CharSequence text = ide+" " +distance;
+                CharSequence text = "CROSSWALK NEAR";
+
+                // SpannableStringBuilder biggerText = new SpannableStringBuilder(text);
+                // biggerText.setSpan(new RelativeSizeSpan(1.35f), 0, text.length(), 0);
+                // Toast.makeText(context, biggerText, Toast.LENGTH_LONG).show();
+
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 0);
+
+                toast.show();
             }
             if (distance <= 3) {
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 long[] pattern = {3, 100, 100};
                 v.vibrate(pattern, 1);
+                //            CharSequence text = ide+" " +distance;
+                CharSequence text = "CROSSWALK NEAR";
+
+                // SpannableStringBuilder biggerText = new SpannableStringBuilder(text);
+                // biggerText.setSpan(new RelativeSizeSpan(1.35f), 0, text.length(), 0);
+                // Toast.makeText(context, biggerText, Toast.LENGTH_LONG).show();
+
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 0);
+
+                toast.show();
             }
-            CharSequence text = ide+" " +distance;
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 0);
-            toast.show();
+
 
         }
 
@@ -386,26 +428,63 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onClick(View view) {
         switch(view.getId())
         {
-            case R.id.vibration:
-                Selection="Vibration";
-                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                v.vibrate(500);
+
+                //Selection="Vibration";
+               // Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+             //   v.vibrate(500);
+            case R.id.btn_call:
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:911"));
+
+                if (ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+
+
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.CALL_PHONE},
+                            MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+                    return;
+
+                }
+                startActivity(callIntent);
                 break;
-            case R.id.voice:
+            case R.id.btn_points:
 
 
-                mtext_Speech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(int status) {
-                        if(status != TextToSpeech.ERROR) {
-                            mtext_Speech.setLanguage(Locale.US);
+                try {
+                    InputStream is = getAssets().open("points.xml");
+                    //   InputStream is = getAssets().open("cunit.xml");
+                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                    Document doc = dBuilder.parse(is);
+                    Element element=doc.getDocumentElement();
+                    element.normalize();
+                    NodeList nList = doc.getElementsByTagName("node");
+                    for (int i=0; i<nList.getLength(); i++) {
+                        Node node = nList.item(i);
+                        if (node.getNodeType() == Node.ELEMENT_NODE) {
+                            Element element2 = (Element) node;
+                            LatLng sydney = new LatLng(Double.parseDouble(element2.getAttribute("lat")),Double.parseDouble( element2.getAttribute("lon")));
+                            mMap.addMarker(new MarkerOptions().position(sydney).title(element2.getAttribute("id")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
                         }
                     }
-                });
-                Selection="Voice";
-                String toSpeak = Selection;
-                Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
-                mtext_Speech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+
+                } catch (Exception e) {e.printStackTrace();}
+
+//                mtext_Speech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+             //       @Override
+            //        public void onInit(int status) {
+           //             if(status != TextToSpeech.ERROR) {
+           //                 mtext_Speech.setLanguage(Locale.US);
+          //              }
+          //          }
+          //      });
+          //      Selection="Voice";
+          //      String toSpeak = Selection;
+           //     Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
+          //      mtext_Speech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
                 break;
 
 

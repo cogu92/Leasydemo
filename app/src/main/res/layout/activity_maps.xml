@@ -17,34 +17,8 @@ tools:context="com.androidtutorialpoint.googlemapsapp.MapsActivity"
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="171dp"
-        android:orientation="horizontal"
-        android:background="@color/colorPrimary"
-        android:weightSum="1"
-        android:layout_weight="0.95">
-
-        <ImageButton
-            android:id="@+id/vibration"
-            android:layout_width="195dp"
-            android:layout_height="190dp"
-            android:layout_weight="0.43"
-            android:adjustViewBounds="false"
-            android:background="@color/colorPrimary"
-            android:src="@drawable/btn_interes" />
-
-        <ImageButton
-            android:id="@+id/voice"
-            android:layout_width="195dp"
-            android:layout_height="190dp"
-            android:background="@color/colorPrimary"
-            android:src="@drawable/btn_call"
-            android:layout_weight="0.89" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="46dp"
+        android:layout_weight="0.99"
         android:orientation="horizontal">
 
         <TextView
@@ -70,6 +44,33 @@ tools:context="com.androidtutorialpoint.googlemapsapp.MapsActivity"
             android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="171dp"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:weightSum="1"
+        android:layout_weight="0.25">
+
+        <ImageButton
+            android:id="@+id/btn_points"
+            android:layout_width="195dp"
+            android:layout_height="190dp"
+            android:layout_weight="0.43"
+            android:adjustViewBounds="false"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/btn_interes" />
+
+        <ImageButton
+            android:id="@+id/btn_call"
+            android:layout_width="195dp"
+            android:layout_height="190dp"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/btn_call"
+            android:layout_weight="0.89" />
 
     </LinearLayout>
 

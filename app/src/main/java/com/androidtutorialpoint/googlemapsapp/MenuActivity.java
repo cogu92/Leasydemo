@@ -1,30 +1,16 @@
 package com.androidtutorialpoint.googlemapsapp;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.provider.ContactsContract;
-import android.speech.tts.TextToSpeech;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
-
-import com.google.android.gms.maps.SupportMapFragment;
-
-import java.util.Locale;
+import android.widget.TextView;
 
 /**
  * Created by DELL on 6/4/2017.
@@ -38,16 +24,26 @@ public class MenuActivity extends   Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_options);
-        ImageButton btn_call = (ImageButton) findViewById(R.id.btn_call);
-        btn_call.setOnClickListener(this);
 
-        ImageButton btn_vibration = (ImageButton) findViewById(R.id.btn_vibration);
-        btn_vibration.setOnClickListener(this);
+        ImageButton btn_ok = (ImageButton) findViewById(R.id.btn_ok);
+        btn_ok.setOnClickListener(this);
+
+        ImageButton btn_map_activity = (ImageButton) findViewById(R.id.btn_map_activity);
+        btn_map_activity.setOnClickListener(this);
 
         ImageButton btn_contact = (ImageButton) findViewById(R.id.btn_contact);
         btn_contact.setOnClickListener(this);
+        ImageButton btn_settings = (ImageButton) findViewById(R.id.btn_settings);
+        btn_settings.setOnClickListener(this);
 
-
+        TextView txt_contact = (TextView) findViewById(R.id.txt_contact);
+        txt_contact.setTextSize(MainSettings.ivar1);
+        TextView txt_config = (TextView) findViewById(R.id.txt_config);
+        txt_config.setTextSize(MainSettings.ivar1);
+        TextView txt_map = (TextView) findViewById(R.id.txt_map);
+        txt_map.setTextSize(MainSettings.ivar1);
+        TextView txt_routes = (TextView) findViewById(R.id.txt_routes);
+        txt_routes.setTextSize(MainSettings.ivar1);
 
     }
 
@@ -72,24 +68,8 @@ public class MenuActivity extends   Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_call:
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:6389540007"));
 
-                if (ActivityCompat.checkSelfPermission(MenuActivity.this,
-                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-
-
-                    ActivityCompat.requestPermissions(MenuActivity.this,
-                            new String[]{Manifest.permission.CALL_PHONE},
-                            MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-                    
-                    return;
-
-                }
-                startActivity(callIntent);
-                break;
-            case R.id.btn_vibration:
+            case R.id.btn_map_activity:
                 final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
 
                 if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
@@ -104,7 +84,11 @@ public class MenuActivity extends   Activity implements View.OnClickListener {
 
 
                 break;
-
+            case R.id.btn_settings:
+                                 Intent mainIntent = new Intent().setClass(this, MainSettings.class);
+                    startActivity(mainIntent);
+                    finish();
+                                 break;
 
             case R.id.btn_contact:
 
@@ -114,6 +98,14 @@ public class MenuActivity extends   Activity implements View.OnClickListener {
 
                 break;
 
+            case R.id.btn_ok:
+
+                Intent saveIntent = new Intent().setClass(this,MainSaveRoutes.class);
+                startActivity(saveIntent);
+               finish();
+
+
+               break;
 
 
         }

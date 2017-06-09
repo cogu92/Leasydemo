@@ -44,6 +44,10 @@
             android:name=".MapsActivity"/>
         <activity
             android:name=".MenuActivity"/>
+        <activity
+            android:name=".MainSettings"/>
+        <activity
+            android:name=".MainSaveRoutes"/>
     </application>
 
 </manifest>

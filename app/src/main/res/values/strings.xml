@@ -2,5 +2,6 @@
     <string name="app_name">Leasy</string>
     <string name="title_activity_maps">Leasy</string>
     <string name="points_of_interes">POINTS OF INTERES</string>
-    <string name="viemergency_call">ViEMERGENCY CALL</string>
+    <string name="viemergency_call">EMERGENCY CALL</string>
+    <string name="emergency_call_number">EMERGENCY CALL NUMBER</string>
 </resources>
