@@ -8,64 +8,64 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.01"
+        android:layout_height="39dp"
         android:background="@color/colorPrimary"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="0.30">
 
         <TextView
             android:id="@+id/txt_map"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="97dp"
             android:text="NAVIGATE"
             android:textAlignment="center"
-            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColor="@color/place_autocomplete_prediction_primary_text"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_weight="0.66" />
 
         <TextView
             android:id="@+id/txt_routes"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.44"
-            android:text="SAVE ROUTES"
+            android:layout_height="109dp"
+            android:text="NEW ROUTES"
             android:textAlignment="center"
-            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColor="@color/place_autocomplete_prediction_primary_text"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_weight="0.38" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="282dp"
+        android:layout_height="203dp"
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:layout_weight="0.62">
 
         <ImageButton
             android:id="@+id/btn_map_activity"
             android:layout_width="190dp"
-            android:layout_height="287dp"
-            android:layout_weight="0.65"
+            android:layout_height="match_parent"
+            android:layout_weight="0.82"
             android:adjustViewBounds="false"
-            android:background="@color/colorPrimary"
-            android:src="@drawable/map_btn" />
+            android:background="#ffffff"
+            android:src="@drawable/navigate" />
 
         <ImageButton
             android:id="@+id/btn_ok"
             android:layout_width="190dp"
-            android:layout_height="292dp"
+            android:layout_height="match_parent"
             android:background="@color/colorPrimary"
-            android:src="@drawable/ok_btn"
-            android:layout_weight="0.89" />
+            android:src="@drawable/saverute" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="12dp"
-        android:layout_weight="0.05"
+        android:layout_weight="0.33"
         android:background="@color/colorPrimary"
         android:orientation="horizontal">
 
@@ -73,10 +73,10 @@
             android:id="@+id/txt_contact"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
-            android:layout_weight="1.21"
+            android:layout_weight="1.09"
             android:text="AGENDA"
             android:textAlignment="center"
-            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColor="@color/place_autocomplete_prediction_primary_text"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -84,10 +84,10 @@
             android:id="@+id/txt_config"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1.00"
+            android:layout_weight="0.92"
             android:text="SETTINGS"
             android:textAlignment="center"
-            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColor="@color/place_autocomplete_prediction_primary_text"
             android:textSize="24sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -97,24 +97,24 @@
         android:layout_height="203dp"
         android:orientation="horizontal"
         android:weightSum="1"
-        android:layout_weight="0.04">
+        android:layout_weight="0.62">
 
         <ImageButton
             android:id="@+id/btn_contact"
             android:layout_width="190dp"
-            android:layout_height="277dp"
+            android:layout_height="268dp"
             android:layout_weight="0.65"
             android:adjustViewBounds="false"
             android:background="@color/colorPrimary"
-            android:src="@drawable/contact_btn" />
+            android:src="@drawable/agenda" />
 
         <ImageButton
             android:id="@+id/btn_settings"
             android:layout_width="190dp"
-            android:layout_height="284dp"
-            android:layout_weight="0.55"
+            android:layout_height="268dp"
             android:background="@color/colorPrimary"
-            android:src="@drawable/configuration_btn" />
+            android:src="@drawable/settings"
+            android:layout_weight="0.65" />
     </LinearLayout>
 
 </LinearLayout>

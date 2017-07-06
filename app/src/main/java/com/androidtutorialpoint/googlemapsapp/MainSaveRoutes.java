@@ -1,6 +1,7 @@
 package com.androidtutorialpoint.googlemapsapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +33,13 @@ public class MainSaveRoutes extends Activity implements View.OnClickListener  {
         btnsave.setTextSize(MainSettings.ivar1);
 
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent saveIntent = new Intent().setClass(this,MenuActivity.class);
+        startActivity(saveIntent);
+        finish();
+    }
     @Override
     protected void onStop() {
         super.onStop();

@@ -55,6 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener,GoogleMap.OnMapClickListener,View.OnClickListener {
 
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
@@ -143,27 +144,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         try {
-            InputStream is = getAssets().open("barcelona.xml");
-            //   InputStream is = getAssets().open("cunit.xml");
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(is);
-            Element element=doc.getDocumentElement();
-            element.normalize();
-            NodeList nList = doc.getElementsByTagName("node");
-            for (int i=0; i<nList.getLength(); i++) {
-                Node node = nList.item(i);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element element2 = (Element) node;
-                    LatLng sydney = new LatLng(Double.parseDouble(element2.getAttribute("lat")),Double.parseDouble( element2.getAttribute("lon")));
-                    mMap.addMarker(new MarkerOptions().position(sydney).title(element2.getAttribute("id")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+            if ( MenuActivity.ivar2=="activity")
+            {
+
+
+                LatLng sydney = new LatLng(41.3866248, 2.1693842);
+                mMap.addMarker(new MarkerOptions().position(sydney).title("Pool").icon(BitmapDescriptorFactory.fromResource(R.drawable.pool)));
+                sydney = new LatLng(41.3871638, 2.1711614);
+                mMap.addMarker(new MarkerOptions().position(sydney).title("Gym").icon(BitmapDescriptorFactory.fromResource(R.drawable.gim)));
+                sydney = new LatLng(41.3877394, 2.1694632);
+                mMap.addMarker(new MarkerOptions().position(sydney).title("Chees").icon(BitmapDescriptorFactory.fromResource(R.drawable.chees)));
+
+
+            }
+            else {
+                InputStream is = getAssets().open("barcelona.xml");
+                   DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                Document doc = dBuilder.parse(is);
+                Element element = doc.getDocumentElement();
+                element.normalize();
+                NodeList nList = doc.getElementsByTagName("node");
+                for (int i = 0; i < nList.getLength(); i++) {
+                    Node node = nList.item(i);
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
+                        Element element2 = (Element) node;
+                        LatLng sydney = new LatLng(Double.parseDouble(element2.getAttribute("lat")), Double.parseDouble(element2.getAttribute("lon")));
+                        mMap.addMarker(new MarkerOptions().position(sydney).title(element2.getAttribute("id")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                    }
                 }
             }
 
         } catch (Exception e) {e.printStackTrace();}
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent saveIntent = new Intent().setClass(this,MenuActivity.class);
+        startActivity(saveIntent);
+        finish();
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -195,8 +219,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
-
     @Override
     public void onLocationChanged(Location location) {
 
@@ -221,9 +243,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.zoomTo(18));
 
         //stop location updates
-        // if (mGoogleApiClient != null) {
-        //   LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-        //  }
+         if (mGoogleApiClient != null) {
+           LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+          }
         Context context = getApplicationContext();
 
 
@@ -279,7 +301,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 long[] pattern = {3, 100, 1000};
                 v.vibrate(pattern, 1);
                 //            CharSequence text = ide+" " +distance;
-                CharSequence text = "CROSSWALK NEAR";
+                CharSequence text = "CROSSWALK NEAR4" + distance;
 
                 // SpannableStringBuilder biggerText = new SpannableStringBuilder(text);
                 // biggerText.setSpan(new RelativeSizeSpan(1.35f), 0, text.length(), 0);
@@ -296,7 +318,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 long[] pattern = {3, 100, 500};
                 v.vibrate(pattern, 1);
                 //            CharSequence text = ide+" " +distance;
-                CharSequence text = "CROSSWALK NEAR";
+                CharSequence text = "CROSSWALK NEAR 1";
 
                 // SpannableStringBuilder biggerText = new SpannableStringBuilder(text);
                 // biggerText.setSpan(new RelativeSizeSpan(1.35f), 0, text.length(), 0);
@@ -313,7 +335,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 long[] pattern = {3, 100, 100};
                 v.vibrate(pattern, 1);
                 //            CharSequence text = ide+" " +distance;
-                CharSequence text = "CROSSWALK NEAR";
+                CharSequence text = "CROSSWALK NEAR 2";
 
                 // SpannableStringBuilder biggerText = new SpannableStringBuilder(text);
                 // biggerText.setSpan(new RelativeSizeSpan(1.35f), 0, text.length(), 0);
@@ -367,7 +389,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public boolean checkLocationPermission(){
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -393,8 +414,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
@@ -466,7 +486,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if (node.getNodeType() == Node.ELEMENT_NODE) {
                             Element element2 = (Element) node;
                             LatLng sydney = new LatLng(Double.parseDouble(element2.getAttribute("lat")),Double.parseDouble( element2.getAttribute("lon")));
-                            mMap.addMarker(new MarkerOptions().position(sydney).title(element2.getAttribute("id")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+                          // ad image .icon(BitmapDescriptorFactory.fromResource(R.drawable.agenda))
+                            mMap.addMarker(new MarkerOptions().position(sydney).title(element2.getAttribute("v")).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
                         }
                     }

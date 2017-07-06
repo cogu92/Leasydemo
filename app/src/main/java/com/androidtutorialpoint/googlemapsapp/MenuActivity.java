@@ -1,16 +1,24 @@
 package com.androidtutorialpoint.googlemapsapp;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import static android.R.attr.id;
 
 /**
  * Created by DELL on 6/4/2017.
@@ -19,7 +27,8 @@ import android.widget.TextView;
 public class MenuActivity extends   Activity implements View.OnClickListener {
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     private static final int PICK_CONTACT =1 ;
-
+    private static final int CONTACT_PICKER_RESULT =1 ;
+    public static String ivar2="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +73,39 @@ public class MenuActivity extends   Activity implements View.OnClickListener {
         final AlertDialog alert = builder.create();
         alert.show();
     }
+    @Override
+    public void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
 
+        switch (reqCode) {
+            case (PICK_CONTACT) :
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri contactData = data.getData();
+                    Cursor c =  managedQuery(contactData, null, null, null, null);
+                    if (c.moveToFirst()) {
+
+                        String name = "911" + c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse("tel:"+name));
+
+                        if (ActivityCompat.checkSelfPermission(this,
+                                Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+
+
+                            ActivityCompat.requestPermissions(this,
+                                    new String[]{Manifest.permission.CALL_PHONE},
+                                    MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+                            return;
+
+                        }
+                        startActivity(callIntent);
+
+                    }
+                }
+                break;
+        }
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -76,6 +117,8 @@ public class MenuActivity extends   Activity implements View.OnClickListener {
                     buildAlertMessageNoGps();
                 }
                 else{
+
+                    ivar2="navigate";
                     Intent mainIntent = new Intent().setClass(this, MapsActivity.class);
                     startActivity(mainIntent);
                     finish();
@@ -100,9 +143,23 @@ public class MenuActivity extends   Activity implements View.OnClickListener {
 
             case R.id.btn_ok:
 
-                Intent saveIntent = new Intent().setClass(this,MainSaveRoutes.class);
-                startActivity(saveIntent);
-               finish();
+
+
+                final LocationManager managers = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+
+                if ( !managers.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+                    buildAlertMessageNoGps();
+                }
+                else{
+
+                    ivar2="activity";
+                     mainIntent = new Intent().setClass(this,MainSaveRoutes.class);
+//                    mainIntent = new Intent().setClass(this, MapsActivity.class);
+
+                    startActivity(mainIntent);
+                    finish();
+
+                }
 
 
                break;

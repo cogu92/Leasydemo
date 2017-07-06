@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:background="@color/colorPrimaryDark"
         android:orientation="horizontal"
         android:weightSum="1">
 
@@ -18,7 +19,7 @@
             android:layout_width="132dp"
             android:layout_height="88dp"
             android:layout_weight="0.01"
-            android:src="@drawable/configuration_btn1" />
+            android:src="@drawable/settingsxs" />
 
         <RelativeLayout
             android:layout_width="282dp"
@@ -28,14 +29,14 @@
                 android:id="@+id/txt_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="73dp"
                 android:text="Settings"
                 android:textAlignment="center"
                 android:textColor="@color/common_google_signin_btn_text_dark_default"
                 android:textSize="30sp"
-                android:textStyle="bold"
-                android:layout_marginStart="73dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true" />
+                android:textStyle="bold" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -54,27 +55,48 @@
             android:id="@+id/imageView3"
             android:layout_width="135dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/btn_call" />
+            android:src="@drawable/emergency" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.16">
 
+            <TextView
+                android:id="@+id/txv_emergency"
+                android:layout_width="265dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+                android:text="Emergency Contact"
+                android:textAlignment="center"
+                android:textColor="@color/place_autocomplete_prediction_primary_text"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
             <EditText
                 android:id="@+id/editText2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="49dp"
                 android:ems="10"
 
                 android:inputType="phone"
-                android:layout_alignParentEnd="true" />
+                android:layout_marginBottom="45dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="17dp" />
+
         </RelativeLayout>
 
     </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:visibility="visible" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -91,7 +113,7 @@
             android:layout_weight="1"
             android:text="Font Size"
             android:textAlignment="center"
-            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColor="@color/place_autocomplete_prediction_primary_text"
             android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
