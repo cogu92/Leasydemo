@@ -28,7 +28,7 @@
             android:id="@+id/txt_routes"
             android:layout_width="wrap_content"
             android:layout_height="109dp"
-            android:text="NEW ROUTES"
+            android:text="SAVE ROUTES"
             android:textAlignment="center"
             android:textColor="@color/place_autocomplete_prediction_primary_text"
             android:textSize="24sp"

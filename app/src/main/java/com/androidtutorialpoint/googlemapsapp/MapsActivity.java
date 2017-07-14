@@ -245,7 +245,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //stop location updates
          if (mGoogleApiClient != null) {
            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-          }
+         }
         Context context = getApplicationContext();
 
 
@@ -301,7 +301,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 long[] pattern = {3, 100, 1000};
                 v.vibrate(pattern, 1);
                 //            CharSequence text = ide+" " +distance;
-                CharSequence text = "CROSSWALK NEAR4" + distance;
+                CharSequence text = "CROSSWALK NEAR" + distance;
 
                 // SpannableStringBuilder biggerText = new SpannableStringBuilder(text);
                 // biggerText.setSpan(new RelativeSizeSpan(1.35f), 0, text.length(), 0);
@@ -318,7 +318,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 long[] pattern = {3, 100, 500};
                 v.vibrate(pattern, 1);
                 //            CharSequence text = ide+" " +distance;
-                CharSequence text = "CROSSWALK NEAR 1";
+                CharSequence text = "CROSSWALK NEAR";
 
                 // SpannableStringBuilder biggerText = new SpannableStringBuilder(text);
                 // biggerText.setSpan(new RelativeSizeSpan(1.35f), 0, text.length(), 0);
@@ -335,7 +335,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 long[] pattern = {3, 100, 100};
                 v.vibrate(pattern, 1);
                 //            CharSequence text = ide+" " +distance;
-                CharSequence text = "CROSSWALK NEAR 2";
+                CharSequence text = "CROSSWALK NEAR";
 
                 // SpannableStringBuilder biggerText = new SpannableStringBuilder(text);
                 // biggerText.setSpan(new RelativeSizeSpan(1.35f), 0, text.length(), 0);
@@ -454,7 +454,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
              //   v.vibrate(500);
             case R.id.btn_call:
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:911"));
+                callIntent.setData(Uri.parse("tel:674870818"));
 
                 if (ActivityCompat.checkSelfPermission(this,
                         Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
